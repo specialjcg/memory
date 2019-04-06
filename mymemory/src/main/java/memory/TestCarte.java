@@ -1,0 +1,39 @@
+package memory;
+
+import java.util.Scanner;
+
+
+public class TestCarte {
+
+
+	public TestCarte() {
+		
+	}
+
+	public static void main(String[] args) {
+		// Declaration de variables
+		
+		System.out.println("Choisisez le nombre de paires d�sir�es : " );
+		
+		@SuppressWarnings("resource")
+		Scanner sc = new Scanner(System.in);
+		 int nbPairesTotal = sc.nextInt();
+			 
+		
+		Carte temp1 =new Carte();
+		Carte temp2 =new Carte();
+		
+		ListeCartes tirage = new ListeCartes(nbPairesTotal);
+		
+		// Initialisation de la liste
+		
+		tirage.randomListe();
+
+		 tirage.repetition_du_jeu(temp1, temp2);
+		 
+		 System.out.println("Jeu termin� ! ");
+
+	}
+	
+	
+}
