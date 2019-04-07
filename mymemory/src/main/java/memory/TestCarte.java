@@ -20,16 +20,14 @@ public class TestCarte {
 		 int nbPairesTotal = sc.nextInt();
 			 
 		
-		Carte temp1 =new Carte();
-		Carte temp2 =new Carte();
-		
+	
 		ListeCartes tirage = new ListeCartes(nbPairesTotal);
 		
 		// Initialisation de la liste
 		
 		tirage.randomListe();
 
-		 tirage.repetition_du_jeu(temp1, temp2);
+		 tirage.repetition_du_jeu();
 		 
 		 System.out.println("Jeu termin� ! ");
 

@@ -5,10 +5,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Vector;
-
+import java.util.ArrayList;
 
 
 public class ListeCartes extends Thread{
+
+	public ListeCartes() {
+	}
 	public class ConsoleColors {
 		// Reset
 		public static final String RESET = "\033[0m"; // Text Reset
@@ -87,19 +90,10 @@ public class ListeCartes extends Thread{
 	//Declaration des variables
 	private int tailleTotale ;
 	private int compteur_paire=0;
-	private List<Carte> listeCarte ;
+    private List<Carte> listeCarte;
 
 	
 	
-	
-	//Getter and setter
-	public List<Carte> getListeCarte() {
-		return listeCarte;
-	}
-
-	public void setListeCarte(List<Carte> listeCarte) {
-		this.listeCarte = listeCarte;
-	}
 
 	public int getM() {
 		return tailleTotale;
@@ -113,12 +107,12 @@ public class ListeCartes extends Thread{
 	
 	// Constructeur
 	public ListeCartes(int i) {
-		
-		List<Carte> listeCarte = new ArrayList<Carte>();
+		tailleTotale = 2 * i;
+		this.listeCarte = new ArrayList<Carte>();
 		// TODO Auto-generated constructor stub
-		for(int j=0;j<i;j++){
-		listeCarte.add(Carte());}
-		tailleTotale=2*i;
+		for(int j=0;j< tailleTotale;j++){
+		this.listeCarte.add(new Carte());}
+		
 		
 	}
 	
@@ -128,37 +122,25 @@ public class ListeCartes extends Thread{
 		
 		
 		for (int i=0;i<tailleTotale;i++) {
-			this.listeCarte.add(new Carte(1+i/2));
+			
+			this.listeCarte.get(i).setVal(1 + i / 2);
 		}
 
 		Collections.shuffle(this.listeCarte); 
 		//return listeCarte;
 	}
-	// Recup�rer une carte via index
-		public Carte choixCarte(int a) {
-		
-			Carte tempCarte = new Carte();
-			try{
-				tempCarte = this.listeCarte.get(a);
-				tempCarte.setInfo(0);
-			}
-			catch (Exception e){
-				System.out.println("Erreur de saisie");
-			}
-			return tempCarte;
-		} 
-		
+
 		// Verification des cartes
 		public boolean verifCarte(Carte a, Carte b){
 		
 			if (a.getVal() == b.getVal()){
 				compteur_paire++;
-				System.out.println("Les cartes sont identiques");
+				System.out.println(ConsoleColors.BLUE_BACKGROUND+"Les cartes sont identiques" + ConsoleColors.RESET);
 				System.out.println("Vous avez trouv� " + compteur_paire + " paires");				
 				return true;
 			}
 			else {
-				System.out.println("\033[1;92m" + "Les cartes sont diff�rentes" + ConsoleColors.RESET);
+				System.out.println(ConsoleColors.GREEN_BACKGROUND + "Les cartes sont diff�rentes" + ConsoleColors.RESET);
 				System.out.println("Vous avez trouv� " + compteur_paire + " paires");
 				return false;
 			}
@@ -170,20 +152,29 @@ public class ListeCartes extends Thread{
 		{
 			System.out.print("| ");
 			 for(int i=0;i<tailleTotale;i++){
-				 this.listeCarte.get(i).setInfo(1);
-				 afficher = this.choixCarte(i).reveleCarte();
-				 System.out.print(afficher +" |");
+			
+				 
+				 System.out.print(i+" |");
 				// System.out.println("Info de "+ i +" : "+listeCarte.elementAt(i).getInfo());
 			//	 System.out.print(afficher +" |");
 			 }
-			 System.out.println();			 
+			 System.out.println();	
+			 	System.out.print("| ");
+		for (int i = 0; i < tailleTotale; i++) {
+
+			System.out.print(listeCarte.get(i).reveleCarte() + " |");
+			// System.out.println("Info de "+ i +" : "+listeCarte.elementAt(i).getInfo());
+			// System.out.print(afficher +" |");
+		}
+		System.out.println();
+	 
 		}
 		
 	// Retourner toutes les cartes sans paire
 	public void retourneCarte() {
 		for (int i = 0; i < tailleTotale; i++) {
-			if (listeCarte.elementAt(i).getInfo() == 1) {
-				this.listeCarte.elementAt(i).setInfo(0);
+			if (listeCarte.get(i).getInfo() == 1) {
+				listeCarte.get(i).setInfo(0);
 
 			}
 		}
@@ -197,32 +188,35 @@ public class ListeCartes extends Thread{
 			return false;
 		}
 	}
-		public void repetition_du_jeu(Carte temp1,Carte temp2){
-			
-
+		public void repetition_du_jeu(){
+			 int temps1=0;
+int temps2=0;
 			int continuer = 1;
 			while(continuer == 1){
 				Scanner sc = new Scanner(System.in);
 				System.out.println("Choix de la premiere carte : ");
-				 int index = sc.nextInt();
-				 temp1= choixCarte(index);
 				 
-				 System.out.println("Choix de la deuxieme carte : ");
+				 temps1 = sc.nextInt();
 
-				 index = sc.nextInt();
-				 temp2= choixCarte(index);
-				 
-				 if(temp1==temp2){
+			System.out.println("Choix de la deuxieme carte : ");
+
+			temps2 = sc.nextInt();
+
+			if (temps1 == temps2) {
 					 System.out.println("Erreur Vous avez choisi la m�me carte.");
+
 				 }
 				 else{
 					
-					 System.out.println("Valeur de la premi�re carte : " + temp1.getVal());
-					 System.out.println("Valeur de la deuxi�me carte : " + temp2.getVal());
-					 affichage();
-					 verifCarte(temp1,temp2);
-
-					 retourneCarte();
+					 System.out.println("Valeur de la premi�re carte : " + this.listeCarte.get(temps1).getVal());
+					 System.out.println("Valeur de la deuxi�me carte : " + this.listeCarte.get(temps2).getVal());
+					 
+					 if (verifCarte(this.listeCarte.get(temps1), this.listeCarte.get(temps2))){
+						 this.listeCarte.get(temps1).setInfo(1);
+						 this.listeCarte.get(temps2).setInfo(1);
+					 };
+				affichage();
+					 
 					 
 					 try {
 						Thread.sleep(4000);

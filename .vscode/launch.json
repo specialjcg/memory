@@ -1,0 +1,12 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - TestCarte",
+            "request": "launch",
+            "mainClass": "memory.TestCarte",
+            "projectName": "mymemory",
+            "console": "integratedTerminal"
+        }
+    ]
+}

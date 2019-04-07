@@ -47,7 +47,6 @@ public class Carte
 		}
 		else {
 			Integer temp = this.getVal();
-			System.out.println("Ne marche pas");
 			return temp.toString();
 		}
 	}
